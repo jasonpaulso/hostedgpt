@@ -2,26 +2,34 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = ['overlay'];
-  static outlets = ['image-upload'];
+  static classes = ['dragging'];
 
   connect() {
-    this.element.addEventListener('drop', this.boundDropped);
-    this.element.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      this.overlayTarget.style.display = 'initial';
-    });
-    this.element.addEventListener('dragleave', (event) => {
-      event.preventDefault();
-      this.overlayTarget.style.display = 'none';
-    });
-    this.element.addEventListener('drop', (event) => {
-      event.preventDefault();
-      this.overlayTarget.style.display = 'none';
-    });
-    this.element.addEventListener('dragend', (event) => {
-      event.preventDefault();
-      this.overlayTarget.style.display = 'none';
-    });
+    this.element.addEventListener('drop', this.boundDropped.bind(this));
+    this.element.addEventListener('dragover', this.handleDragOver.bind(this));
+    this.element.addEventListener('dragleave', this.handleDragLeave.bind(this));
+    this.element.addEventListener('drop', this.handleDrop.bind(this));
+    this.element.addEventListener('dragend', this.handleDragEnd.bind(this));
+  }
+
+  handleDragOver(event) {
+    event.preventDefault();
+    this.overlayTarget.classList.remove('hidden');
+  }
+
+  handleDragLeave(event) {
+    event.preventDefault();
+    this.overlayTarget.classList.add('hidden');
+  }
+
+  handleDrop(event) {
+    event.preventDefault();
+    this.overlayTarget.classList.add('hidden');
+  }
+
+  handleDragEnd(event) {
+    event.preventDefault();
+    this.overlayTarget.classList.add('hidden');
   }
 
   disconnect() {
@@ -35,7 +43,6 @@ export default class extends Controller {
   dropped(event) {
     event.preventDefault(); // w/o this chrome opens a new browser tab w/ the image
     let files = event.dataTransfer.files;
-    console.log('dropped', this.element);
-    this.imageUploadOutlet.dropped(files);
+    this.dispatch('dropped', { detail: { files: files } });
   }
 }

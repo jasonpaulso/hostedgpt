@@ -101,8 +101,12 @@
   </header>
   <!-- end header possibilities -->
 
-  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide" data-controller="scrollable file-drop" data-scrollable-not-bottom-class="!block" data-file-drop-image-upload-outlet="#composer">
-
+  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide"
+    data-controller="scrollable file-drop image-upload"
+    data-action="file-drop:dropped->image-upload#dropped"
+    data-file-drop-dragging-class="dragging"
+    data-scrollable-not-bottom-class="!block"
+  >
     <div id="messages" class="relative flex-grow overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
       <div id="messages-container" class="w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto mt-2">
         <%= yield :messages %>
@@ -124,8 +128,7 @@
 
       <div  id="composer"
             class="flex-1 pl-6 pr-6 w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto relative leading-relaxed <%= @assistant.images.blank? && 'relationship' %>"
-            data-controller="new-message image-upload image-preview"
-            data-image-upload-image-preview-outlet = "#document-previews"
+            data-controller="new-message"
       >
         <%= button_tag type: "button",
               id: "attach-button",
@@ -144,7 +147,7 @@
           %>
         <% end %>
 
-        <div id="document-previews" class="absolute hidden space-x-3 left-9 top-3 show-previews:preview-container" data-controller="image-preview">
+        <div id="document-previews" class="absolute hidden space-x-3 left-9 top-3 show-previews:preview-container">
           <div class="
               flex flex-col
               items-stretch
@@ -177,7 +180,7 @@
             <%= button_tag type: "button",
               class: "w-full h-full flex-1 p-0" do
             %>
-              <%= image_tag "", class: "w-full h-full object-cover" %>
+              <%= image_tag "", class: "w-full h-full object-cover", data: { image_upload_target: "preview" } %>
             <% end %>
           </div>
         </div>
@@ -284,7 +287,7 @@
         HostedGPT can make mistakes. Double check information.
       </div>
   </footer>
-  <div class="drag-overlay w-screen h-screen pointer-events-none absolute z-50 bg-gray-200  opacity-50 hidden" data-file-drop-target="overlay" />
+  <div class="drag-overlay w-screen h-screen pointer-events-none absolute z-50 bg-gray-200 opacity-50 hidden" data-file-drop-target="overlay" data-hidden="true"/>
 </turbo-frame>
 
 <dialog

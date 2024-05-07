@@ -1,8 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['file', 'content'];
-  static outlets = ['image-preview'];
+  static targets = ['file', 'content', 'preview'];
 
   connect() {
     this.fileTarget.addEventListener('change', this.boundPreviewUpdate);
@@ -22,7 +21,7 @@ export default class extends Controller {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.element.classList.add('show-previews');
-        this.imagePreviewOutlet.previewUpdate(e.target.result);
+        this.previewTarget.src = e.target.result;
         this.contentTarget.focus();
         window.dispatchEvent(new CustomEvent('main-column-changed'));
       };
@@ -31,19 +30,13 @@ export default class extends Controller {
   }
 
   previewRemove() {
-    this.imagePreviewOutlet.previewRemove();
+    this.previewTarget.src = '';
     this.element.classList.remove('show-previews');
     this.contentTarget.focus();
     window.dispatchEvent(new CustomEvent('main-column-changed'));
   }
 
-  boundDropped = (event) => {
-    event.preventDefault();
-
-    this.dropped(event);
-  };
-
-  dropped(files) {
+  dropped({ detail: { files } }) {
     this.fileTarget.files = files;
     this.previewUpdate(files);
   }
