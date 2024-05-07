@@ -1,64 +1,37 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['file', 'content', 'preview'];
+  static targets = ['file', 'content'];
+  static outlets = ['image-preview'];
 
   connect() {
-    // console.log('🚀 ~ extends ~ connect ~ this.fileTarget:', this.fileTarget);
-    // console.log('🚀 ~ extends ~ connect ~ this.contentTarget:', this.contentTarget);
-    // console.log('🚀 ~ extends ~ connect ~ this.previewTarget:', this.previewTarget);
     this.fileTarget.addEventListener('change', this.boundPreviewUpdate);
-    this.contentTarget.addEventListener('drop', this.boundDropped);
-    this.contentTarget.addEventListener('paste', this.boundPasted);
-    this.contentTarget.addEventListener('click', (event) => {
-      console.log('click');
-    });
-    this.contentTarget.addEventListener('dragenter', (event) => {
-      console.log('dragenter');
-    });
-    this.contentTarget.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      console.log('dragover');
-    });
-    this.contentTarget.addEventListener('drop', (event) => {
-      event.preventDefault();
-      console.log('drop', event.target.result);
-    });
+    this.element.addEventListener('paste', this.boundPasted);
   }
 
   disconnect() {
-    this.fileTarget.removeEventListener('change', this.boundPreviewUpdate);
-    this.contentTarget.removeEventListener('drop', this.boundDropped);
-    this.contentTarget.removeEventListener('paste', this.boundPasted);
+    this.element.removeEventListener('paste', this.boundPasted);
   }
 
   boundPreviewUpdate = () => {
-    this.previewUpdate();
+    this.previewUpdate(this.fileTarget.files);
   };
-  previewUpdate() {
-    const input = this.fileTarget;
-    if (input.files && input.files[0]) {
+
+  previewUpdate(files) {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.previewTargets.forEach((preview) => {
-          console.log('🚀 ~ extends ~ previewUpdate ~ preview:', preview, e.target.result);
-          // preview.querySelector('img') && (preview.querySelector('img').src = e.target.result);
-          // console.log('🚀 ~ extends ~ previewUpdate ~ preview:', preview, e.target.result);
-          // // if (preview.tagName === 'IMG') {
-          // //   preview.src = e.target.result;
-          // // }
-        });
-        // this.previewTarget.querySelector('img').src = e.target.result;
         this.element.classList.add('show-previews');
+        this.imagePreviewOutlet.previewUpdate(e.target.result);
         this.contentTarget.focus();
         window.dispatchEvent(new CustomEvent('main-column-changed'));
       };
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(files[0]);
     }
   }
 
   previewRemove() {
-    this.previewTarget.querySelector('img').src = '';
+    this.imagePreviewOutlet.previewRemove();
     this.element.classList.remove('show-previews');
     this.contentTarget.focus();
     window.dispatchEvent(new CustomEvent('main-column-changed'));
@@ -69,17 +42,16 @@ export default class extends Controller {
 
     this.dropped(event);
   };
-  dropped(event) {
-    event.preventDefault(); // w/o this chrome opens a new browser tab w/ the image
-    let files = event.dataTransfer.files;
-    console.log('🚀 ~ extends ~ dropped ~ files:', files);
+
+  dropped(files) {
     this.fileTarget.files = files;
-    this.previewUpdate();
+    this.previewUpdate(files);
   }
 
   boundPasted = async (event) => {
     this.pasted(event);
   };
+
   async pasted(event) {
     const clipboardData = event.clipboardData || event.originalEvent.clipboardData;
 
@@ -92,7 +64,7 @@ export default class extends Controller {
         this.addImageToFileInput(dataURL, blob.type);
       }
     }
-    this.previewUpdate();
+    this.previewUpdate(this.fileTarget.files);
   }
 
   async readPastedBlobAsDataURL(blob) {
