@@ -102,10 +102,11 @@
   <!-- end header possibilities -->
 
   <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide"
-    data-controller="scrollable file-drop image-upload"
+    data-controller="scrollable image-upload file-drop"
     data-action="file-drop:dropped->image-upload#dropped"
     data-file-drop-dragging-class="dragging"
     data-scrollable-not-bottom-class="!block"
+    data-file-drop-target="draggable"
   >
     <div id="messages" class="relative flex-grow overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
       <div id="messages-container" class="w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto mt-2">
@@ -287,7 +288,9 @@
         HostedGPT can make mistakes. Double check information.
       </div>
   </footer>
-  <div class="drag-overlay w-screen h-screen pointer-events-none absolute z-50 bg-gray-200 opacity-50 hidden" data-file-drop-target="overlay" data-hidden="true"/>
+  <div class="file-drop-area" data-file-drop-target="overlay">
+    <h1 class="text-4xl text-center">Drop files here</h1>
+  </div>
 </turbo-frame>
 
 <dialog

@@ -167,3 +167,10 @@ input:focus {
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
+
+.file-drop-area {
+  @apply inset-0 pointer-events-none absolute z-50 bg-gray-200 opacity-50;
+}
+.file-drop-area.dragging {
+  @apply flex;
+}
