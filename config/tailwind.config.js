@@ -1,7 +1,12 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  content: ['./public/*.html', './app/helpers/**/*.rb', './app/javascript/**/*.js', './app/views/**/*.{erb,haml,html,slim}'],
+  content: [
+    './public/*.html',
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js',
+    './app/views/**/*.{erb,haml,html,slim}',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -38,9 +43,17 @@ module.exports = {
       },
     },
   },
-  darkMode: ['variant', ['@media (prefers-color-scheme: dark) { &:is(.system *) }', '&:is(.dark *)']],
+  darkMode: [
+    'variant',
+    ['@media (prefers-color-scheme: dark) { &:is(.system *) }', '&:is(.dark *)'],
+  ],
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio'), require('@tailwindcss/typography'), require('@tailwindcss/container-queries')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/container-queries'),
+  ],
 };

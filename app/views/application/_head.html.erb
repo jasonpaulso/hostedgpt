@@ -1,6 +1,5 @@
 <head>
   <title><%= yield(:title) %></title>
-
   <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -21,7 +20,6 @@
   <% end %>
   <!-- /ios-pwa-splash screen-->
   <!-- /PWA -->
-
   <%= render 'application/head/favicons' %>
   <%= render 'application/head/meta_tags' %>
   <%= content_for :head %>
