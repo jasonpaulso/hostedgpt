@@ -10,7 +10,6 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "" %>
   <%= javascript_importmap_tags %>
   <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
-  <%= hotwire_livereload_tags if Rails.env.development? %>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json">
   <!-- ios-pwa-splash screen: from https://github.com/avadhesh18/iosPWASplash -->
@@ -23,4 +22,5 @@
   <%= render 'application/head/favicons' %>
   <%= render 'application/head/meta_tags' %>
   <%= content_for :head %>
+  <%= hotwire_livereload_tags if Rails.env.development? %>
 </head>
