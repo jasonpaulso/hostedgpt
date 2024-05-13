@@ -9,7 +9,7 @@
       nav-closed
       bg-white dark:bg-gray-800
     "
-    data-controller="transition dark-mode"
+    data-controller="transition dark-mode viewport"
     data-transition-toggle-class="nav-closed"
     data-transition-target="transitionable"
     data-dark-mode-theme-value="<%= Current.user.preferences[:dark_mode] %>"
@@ -54,7 +54,7 @@
       class="fixed inset-0 bg-black z-20 bg-opacity-40 md:hidden nav-closed:hidden"
       data-action="click->transition#toggleClass"
       ></div>
-    <main class="flex flex-1 h-full w-full ">
+    <main class="flex flex-1 h-full w-full " id="main">
       <%= content_for?(:main) ? yield(:main) : yield %>
     </main>
     <%= render "layouts/toast" %>

@@ -2,6 +2,7 @@
   id="conversation"
   class="relative flex flex-col flex-1"
   data-turbo-action="advance"
+  data-controller="scrollable"
 >
   <%= button_to user_path(Current.user),
     id: "handle",
@@ -81,8 +82,8 @@
     <% end %>
   </header>
 
-  <header id="narrow-header" class="flex-none text-lg text-center h-14 md:hidden">
-    <div class="flex items-center justify-between flex-1 mb-2 border-b border-gray-300 text-gray-950 dark:text-gray-100 dark:border-gray-600 dark:bg-gray-800">
+  <header id="narrow-header" class="flex-none text-lg text-center md:hidden fixed w-full z-[100] bg-white" data-viewport-target="header" data-action="click->scrollable#scrollToTop">
+    <div class="flex items-center justify-between flex-1  border-b border-gray-300 text-gray-950 dark:text-gray-100 dark:border-gray-600 dark:bg-gray-800">
       <%= button_tag type: "button",
         class: "inline-flex px-2 ml-1 cursor-pointer group",
         data: {
@@ -91,7 +92,6 @@
       %>
         <%= icon "bars-3", variant: :outline, size: 22, class: 'stroke-2 text-gray-950 dark:text-gray-100', title: "Menu", tooltip: :right %>
       <% end %>
-
       <%= render 'messages/main_column/assistant_header' %>
 
       <%= link_to new_assistant_message_path(@assistant), target: "_top", class: "block cursor-pointer inline-flex mr-1 px-2 group", data: { role: "new" } do %>
@@ -101,7 +101,7 @@
   </header>
   <!-- end header possibilities -->
 
-  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide" data-controller="scrollable" data-scrollable-not-bottom-class="!block">
+  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide relative"  data-scrollable-not-bottom-class="!block" id="main-section" data-viewport-target="mainSection">
 
     <div id="messages" class="relative flex-grow overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
       <div id="messages-container" class="w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto mt-2">

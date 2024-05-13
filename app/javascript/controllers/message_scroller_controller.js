@@ -1,8 +1,8 @@
 window.lastMessageControllerInstance = null
 window.wasScrolledToBottom = false
 
-import { Controller } from "@hotwired/stimulus"
-import throttle from "utils/throttle"
+import { Controller } from '@hotwired/stimulus'
+import throttle from 'utils/throttle'
 
 export default class extends Controller {
   scrollableTarget = null
@@ -10,18 +10,22 @@ export default class extends Controller {
   static values = {
     scrollDown: { type: Boolean, default: false },
     instantly: { type: Boolean, default: false },
-    onlyScrollDownIfScrolledToBottom: { type: Boolean, default: false }
+    onlyScrollDownIfScrolledToBottom: { type: Boolean, default: false },
   }
 
-  get bottom() { return this.scrollableTarget.scrollHeight }
-  get scrollPosition() { return this.scrollableTarget.scrollTop + this.scrollableTarget.clientHeight }
+  get bottom() {
+    return this.scrollableTarget.scrollHeight
+  }
+  get scrollPosition() {
+    return this.scrollableTarget.scrollTop + this.scrollableTarget.clientHeight
+  }
 
   connect() {
     if (window.lastMessageControllerInstance) window.lastMessageControllerInstance.disconnect()
     window.lastMessageControllerInstance = this
 
-    this.scrollableTarget = document.getElementById('messages')  // Could not reference this as a target
-                                                                      // because it's higher in DOM than messages.
+    this.scrollableTarget = document.getElementById('messages') // Could not reference this as a target
+    // because it's higher in DOM than messages.
     window.addEventListener('resize', this.throttledScrollDownIfScrolledToBottom)
     window.addEventListener('main-column-changed', this.throttledScrollDownIfScrolledToBottom)
 
@@ -35,17 +39,23 @@ export default class extends Controller {
   }
 
   considerScroll() {
-    if (this.scrollDownValue)
-      this.throttledScrollDown()
-    else if (this.onlyScrollDownIfScrolledToBottomValue)
-      this.scrollDownIfScrolledToBottom()
+    if (this.scrollDownValue) this.throttledScrollDown()
+    else if (this.onlyScrollDownIfScrolledToBottomValue) this.scrollDownIfScrolledToBottom()
   }
 
-  discardScrollDown = (event) => { if (window.imageLoadingForSystemTestsToCheck[event?.detail]) { console.log(`discarding ${event.detail}`); window.imageLoadingForSystemTestsToCheck[event.detail] = 'done' } }
-  throttledScrollDownIfScrolledToBottom = throttle((event) => this.scrollDownIfScrolledToBottom(event), 50, this.discardScrollDown)
+  discardScrollDown = (event) => {
+    if (window.imageLoadingForSystemTestsToCheck[event?.detail]) {
+      console.log(`discarding ${event.detail}`)
+      window.imageLoadingForSystemTestsToCheck[event.detail] = 'done'
+    }
+  }
+  throttledScrollDownIfScrolledToBottom = throttle(
+    (event) => this.scrollDownIfScrolledToBottom(event),
+    50,
+    this.discardScrollDown
+  )
   scrollDownIfScrolledToBottom(event) {
-    if (window.wasScrolledToBottom)
-      this.throttledScrollDown(event)
+    if (window.wasScrolledToBottom) this.throttledScrollDown(event)
     else if (window.imageLoadingForSystemTestsToCheck[event?.detail])
       window.imageLoadingForSystemTestsToCheck[event.detail] = 'done'
   }
@@ -57,7 +67,9 @@ export default class extends Controller {
 
   scrollDownRetry(key, attempt) {
     if (attempt < 5 && this.bottom == this.scrollPosition) {
-      setTimeout(() => { this.scrollDownRetry(key, attempt + 1) }, 100)
+      setTimeout(() => {
+        this.scrollDownRetry(key, attempt + 1)
+      }, 100)
       return
     } // will delay up to 500ms if unable to scroll down
 
@@ -65,10 +77,13 @@ export default class extends Controller {
 
     this.scrollableTarget.scrollTo({
       top: this.bottom,
-      behavior: this.instantlyValue ? "auto" : "smooth"
+      behavior: this.instantlyValue ? 'auto' : 'smooth',
     })
 
-    if (key) setTimeout(() => { window.imageLoadingForSystemTestsToCheck[key] = 'done' }, 500)
+    if (key)
+      setTimeout(() => {
+        window.imageLoadingForSystemTestsToCheck[key] = 'done'
+      }, 500)
 
     if (this.instantlyValue) {
       // This occurs immediately after page load; we jump to the bottom as fast as we can. However,
@@ -78,6 +93,13 @@ export default class extends Controller {
       window.addEventListener('load', this.throttledScrollDownIfScrolledToBottom, { once: true })
     }
 
-    setTimeout(() => { window.scrolledDownForSystemTestsToCheck = true }, 500)
+    setTimeout(() => {
+      window.scrolledDownForSystemTestsToCheck = true
+    }, 500)
+  }
+
+  scrollToTop() {
+    // reload window to get the latest messages
+    window.location.reload()
   }
 }

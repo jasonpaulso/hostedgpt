@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = [ "form", "input", "submit", "overlay", "cancel" ]
+  static targets = ['form', 'input', 'submit', 'overlay', 'cancel']
 
   get cleanInputValue() {
     return this.inputTarget.value.trim()
@@ -9,14 +9,15 @@ export default class extends Controller {
 
   connect() {
     this.inputTarget.focus()
+    setTimeout(() => {
+      this.inputTarget.focus()
+    }, 0)
     this.cursorToEnd()
     this.toggleSubmitButton()
   }
 
   cursorToEnd() {
-    this.inputTarget.selectionStart =
-      this.inputTarget.selectionEnd =
-        this.inputTarget.value.length
+    this.inputTarget.selectionStart = this.inputTarget.selectionEnd = this.inputTarget.value.length
   }
 
   // Disable the submit button if the input is empty.
@@ -31,7 +32,7 @@ export default class extends Controller {
   }
 
   focusKeydown(event) {
-    if (event.key == "/" && ["INPUT", "TEXTAREA"].includes(event.target.tagName)) return
+    if (event.key == '/' && ['INPUT', 'TEXTAREA'].includes(event.target.tagName)) return
 
     this.inputTarget.focus()
     event.preventDefault()
@@ -61,12 +62,16 @@ export default class extends Controller {
     // morphed back to being hidden. We listen for that morph and use that as a trigger to clear the text input.
     // This allows the composer to keep focus across multiple chat submits, but it also does not steal the focus
     // back if the user clicks elsewhere while waiting for a server submission to complete.
-    this.overlayTarget.addEventListener('turbo:before-morph-element', this.boundEnableComposer, { once: true })
+    this.overlayTarget.addEventListener('turbo:before-morph-element', this.boundEnableComposer, {
+      once: true,
+    })
     this.overlayTarget.classList.remove('hidden')
     this.submitTarget.disabled = true
   }
 
-  boundEnableComposer = () => { this.enableComposer() }
+  boundEnableComposer = () => {
+    this.enableComposer()
+  }
   enableComposer() {
     this.formTarget.reset()
   }
