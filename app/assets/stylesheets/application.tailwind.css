@@ -172,5 +172,9 @@ input:focus {
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
       env(safe-area-inset-left);
     background-color: #ffffff;
+    -webkit-touch-callout: none !important;
+  }
+  a {
+    -webkit-user-select: none !important;
   }
 }
