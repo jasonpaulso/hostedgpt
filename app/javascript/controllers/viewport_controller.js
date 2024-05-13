@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['header', 'mainSection']
+  static targets = ['header', 'mainSection', 'nav']
 
   connect() {
     this.updateHeight()
@@ -13,9 +13,10 @@ export default class extends Controller {
   }
 
   updateHeight() {
+    const body = this.element
     const headerElement = this.headerTarget
     const mainSection = this.mainSectionTarget
-    const body = this.element
+    const nav = this.navTarget
 
     if (headerElement) {
       headerElement.style.top = window.visualViewport.offsetTop.toString() + 'px'
@@ -25,6 +26,7 @@ export default class extends Controller {
 
     if (mainSection) {
       mainSection.style.top = headerElementHeight + 'px'
+      nav.style.top = headerElementHeight + 'px'
       body.style.height = window.innerHeight - headerElementHeight + 'px'
     }
   }

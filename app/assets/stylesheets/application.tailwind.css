@@ -176,5 +176,6 @@ input:focus {
   }
   a {
     -webkit-user-select: none !important;
+    user-select: none !important;
   }
 }
