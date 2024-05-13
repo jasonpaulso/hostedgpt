@@ -4,7 +4,6 @@ export default class extends Controller {
   static values = { theme: String }
 
   connect() {
-    console.log('Dark mode controller connected', this.themeValue)
     this.setThemeColor()
   }
 
