@@ -2,7 +2,7 @@ window.lastMessageControllerInstance = null
 window.wasScrolledToBottom = false
 
 import { Controller } from '@hotwired/stimulus'
-import throttle from 'utils/throttle'
+import throttle from 'stimulus/utils/throttle'
 
 export default class extends Controller {
   scrollableTarget = null
@@ -45,7 +45,6 @@ export default class extends Controller {
 
   discardScrollDown = (event) => {
     if (window.imageLoadingForSystemTestsToCheck[event?.detail]) {
-      console.log(`discarding ${event.detail}`)
       window.imageLoadingForSystemTestsToCheck[event.detail] = 'done'
     }
   }
@@ -96,10 +95,5 @@ export default class extends Controller {
     setTimeout(() => {
       window.scrolledDownForSystemTestsToCheck = true
     }, 500)
-  }
-
-  scrollToTop() {
-    // reload window to get the latest messages
-    window.location.reload()
   }
 }
