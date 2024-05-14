@@ -80,8 +80,8 @@
       <%= icon "pencil-square", variant: :outline, size: 22, class: 'stroke-2 text-gray-950 dark:text-gray-100', title: "New chat", tooltip: :left %>
     <% end %>
   </header>
-
-   <header id="narrow-header" class="flex-none text-lg text-center md:hidden fixed w-full z-[100] bg-white" data-viewport-target="header">
+  <%# <div class="pt-[100px] bg-white z-[100]"></div> %>
+   <header id="narrow-header" class="flex-none text-lg text-center md:hidden w-full z-[100] bg-white">
     <div class="flex items-center justify-between flex-1  border-b border-gray-300 text-gray-950 dark:text-gray-100 dark:border-gray-600 dark:bg-gray-800">
       <%= button_tag type: "button",
         class: "inline-flex px-2 ml-1 cursor-pointer group",
@@ -100,7 +100,7 @@
   </header>
   <!-- end header possibilities -->
 
-  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide relative" data-controller="scrollable speaker" data-scrollable-not-bottom-class="!block" data-viewport-target="mainSection">
+  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide relative" data-controller="scrollable speaker" data-scrollable-not-bottom-class="!block">
 
     <div id="messages" class="relative flex-grow overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
       <div id="messages-container" class="w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto mt-2">

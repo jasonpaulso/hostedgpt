@@ -96,13 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_13_184146) do
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
-  create_table "llms", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "messages", force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.string "role", null: false

@@ -1,10 +1,8 @@
 import { Controller } from '@hotwired/stimulus'
 
-const UPDATE_INTERVAL_MS = 50
+const UPDATE_INTERVAL_MS = 10
 
 export default class extends Controller {
-  static targets = ['header', 'mainSection', 'nav']
-
   connect() {
     this.updateHeight()
     this.startInterval()
@@ -15,20 +13,7 @@ export default class extends Controller {
   }
 
   updateHeight() {
-    const { element: body, headerTarget, mainSectionTarget, navTarget } = this
-
-    if (headerTarget) {
-      headerTarget.style.top = `${window.visualViewport.offsetTop}px`
-    }
-
-    const headerElementHeight = headerTarget?.offsetHeight || 0
-
-    if (mainSectionTarget && navTarget) {
-      const newTop = `${headerElementHeight}px`
-      mainSectionTarget.style.top = newTop
-      navTarget.style.top = newTop
-      body.style.height = `${window.innerHeight - headerElementHeight}px`
-    }
+    this.element.style.height = `${window.innerHeight}px`
   }
 
   startInterval() {
