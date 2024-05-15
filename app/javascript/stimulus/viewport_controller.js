@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus'
 const UPDATE_INTERVAL_MS = 10
 
 export default class extends Controller {
-  static targets = ['header', 'headerDiv', 'mainSection', 'nav']
+  static targets = ['header', 'mainSection', 'nav']
 
   connect() {
     this.updateHeight()
@@ -15,18 +15,13 @@ export default class extends Controller {
   }
 
   updateHeight() {
-    // const { element: body, headerTarget, navTarget } = this
-    // console.log('updateHeight', window.innerHeight)
-    // const headerElementHeight = headerTarget?.offsetHeight || 0
-    // if (navTarget) {
-    //   const newTop = `${headerElementHeight}px`
-    //   navTarget.style.top = newTop
-    //   body.style.height = `${window.innerHeight}px`
-    //   // body.style.minHeight = 'auto'
-    // }
+    const { element: body, navTarget } = this
+    if (navTarget) {
+      body.style.height = `${window.innerHeight}px`
+    }
   }
 
   startInterval() {
-    // this.interval = setInterval(() => this.updateHeight(), UPDATE_INTERVAL_MS)
+    this.interval = setInterval(() => this.updateHeight(), UPDATE_INTERVAL_MS)
   }
 }
