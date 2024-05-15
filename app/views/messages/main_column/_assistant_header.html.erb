@@ -1,4 +1,3 @@
-<% puts "assistant: #{@assistant}" %>
 <div class="dropdown">
   <div tabindex="0" role="button" class="inline-flex items-center px-3 py-2 text-lg font-medium outline-none cursor-pointer scale-down rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 focus:bg-gray-50 dark:focus:bg-gray-700">
     <%= @assistant.name %>
@@ -13,3 +12,7 @@
     <!-- <li><a><%= icon "arrow-up-tray", variant: :outline, size: 18 %>Share</a></li> -->
   </menu>
 </div>
+<% puts "assistant in main: #{@assistant}" %>
+<script>
+  console.log(<%= @assistant.to_json.html_safe %>);
+</script>
