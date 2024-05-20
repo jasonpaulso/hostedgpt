@@ -9,12 +9,12 @@
         flex-col
         h-full
         flex-shrink-0
-        pt-2 pb-3
+        pt-2
       "
       data-viewport-target="nav"
     >
   <div id="nav-container" class="flex-1 flex flex-col h-full">
-    <div id="nav-scrollable" class="flex-grow pl-3 overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain">
+    <div id="nav-scrollable" class="flex-grow pl-3 overflow-y-auto overflow-x-clip scrollbar-hide overscroll-none">
       <%= yield :nav_column %>
     </div>
     <% if Current.user %>

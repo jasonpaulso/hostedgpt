@@ -17,7 +17,7 @@
     data-transition-target="transitionable"
     data-dark-mode-theme-value="<%= Current.user.preferences[:dark_mode] %>"
   >
-    <main class="flex flex-1 flex-col h-full w-full md:flex-row" id="main">
+    <main class="flex flex-col h-full w-full md:flex-row relative" id="main">
       <%= render "layouts/nav" %>
       <%= content_for?(:main) ? yield(:main) : yield %>
     </main>

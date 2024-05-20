@@ -2,7 +2,7 @@
    <%= render "layouts/header", assistant: @assistant %>
 <turbo-frame
   id="conversation"
-  class="relative flex flex-col flex-1"
+  class="relative flex flex-col h-full overflow-y-hidden"
   data-turbo-action="advance"
 >
   <%= button_to user_path(Current.user),
@@ -62,9 +62,9 @@
     </div>
   <% end %>
 
-  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide relative" data-controller="scrollable speaker" data-scrollable-not-bottom-class="!block">
+  <section class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 overflow-x-clip scrollbar-hide relative h-full" data-controller="scrollable speaker" data-scrollable-not-bottom-class="!block">
 
-    <div id="messages" class="relative flex-grow overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
+    <div id="messages" class="relative overflow-y-auto overflow-x-clip scrollbar-hide overscroll-contain flex-1" data-scrollable-target="scrollable" data-action="scroll->scrollable#scrolled">
       <div id="messages-container" class="w-full md:max-w-none lg:max-w-[700px] xl:max-w-[810px] mx-auto mt-2">
         <%= yield :messages %>
       </div>
