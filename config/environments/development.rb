@@ -81,4 +81,6 @@ Rails.application.configure do
   config.hosts << ENV["DEV_HOST"] if ENV["DEV_HOST"].present?
 
   config.hotwire_livereload.reload_method = :turbo_stream
+
+  config.assets.debug = true
 end

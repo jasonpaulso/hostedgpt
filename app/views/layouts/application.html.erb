@@ -6,11 +6,11 @@
   <%= render "head" %>
   <body
     class="
-      nav-closed
       bg-white dark:bg-gray-800
       bottom-0
       w-full
       absolute
+      <%= Current.user.preferences[:nav_closed] ? 'nav-closed' : "" %>
     "
     data-controller="transition dark-mode viewport"
     data-transition-toggle-class="nav-closed"

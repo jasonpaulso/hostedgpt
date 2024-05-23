@@ -2,14 +2,15 @@
       class="
         w-[260px]
         bg-gray-50 dark:bg-gray-900
-        flex nav-closed:hidden <%= !Current.user.preferences[:nav_closed] && "md:!flex" %>
-        z-[101] md:z-auto nav-closed:z-auto
-        absolute md:relative nav-closed:relative
+        flex
+        absolute
         overflow-x-clip
         flex-col
         h-full
         flex-shrink-0
-        pt-2
+        z-[30]
+        trasform-x-0
+        transition-transform ease-in-out duration-300
       "
       data-viewport-target="nav"
     >
@@ -38,7 +39,7 @@
 </nav>
 <div
       id="mobile-nav-overlay"
-      class="fixed inset-0 bg-black z-20 bg-opacity-40 md:hidden nav-closed:hidden"
+      class="fixed inset-0 bg-black z-20 bg-opacity-40 opacity-1 md:opacity-0 md:pointer-events-none transition-opacity duration-300 ease-in-out"
       data-action="click->transition#toggleClass"
   >
 </div>

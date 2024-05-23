@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col h-full">
+<div class="flex flex-col h-full main-column  ml-auto w-full md:w-[calc(100%-260px)] transition-[width] ease-in-out duration-300">
    <%= render "layouts/header", assistant: @assistant %>
 <turbo-frame
   id="conversation"
@@ -26,6 +26,7 @@
         keydown.ctrl+shift+s@document->keyboard#click
         keydown.meta+period@document->keyboard#click
         keydown.ctrl+period@document->keyboard#click
+        click->transition#toggleClass
       |,
   } do
   %>

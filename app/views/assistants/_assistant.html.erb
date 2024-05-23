@@ -1,6 +1,6 @@
 <%# locals: (assistant:, settings: true, assistant_counter: -1) %>
 <% selected = assistant == @assistant %>
-<div class="first:sticky first:top-0 first:z-10 bg-gray-50 dark:bg-transparent dark:bg-gray-700">
+<div class="first:sticky first:top-0 bg-gray-50 dark:bg-transparent dark:bg-gray-700 pt-2"  data-layout-target="assistant">
   <div class="
               flex justify-between items-center
               mb-1 p-1 pl-2 pr-2 mr-5
@@ -15,7 +15,6 @@
       data-radio-behavior-target="radio"
       data-action="radio-changed@window->radio-behavior#select"
     data-radio-behavior-id-param="<%= assistant.id %>"
-    data-layout-target="assistant"
     >
     <%= link_to new_assistant_message_path(assistant), 
         class: "flex-1 flex items-center text-gray-950 dark:text-gray-100 font-medium truncate", 

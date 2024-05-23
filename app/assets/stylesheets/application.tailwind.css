@@ -74,16 +74,16 @@
   @apply !hidden;
 }
 
-.nav-closed .nav-closed\:hidden {
-  @apply hidden;
+.nav-closed nav {
+  @apply transform -translate-x-full;
 }
 
-.nav-closed .nav-closed\:z-auto {
-  @apply z-auto;
+.nav-closed #mobile-nav-overlay {
+  @apply opacity-0;
 }
 
-.nav-closed .nav-closed\:relative {
-  @apply relative;
+.nav-closed .main-column {
+  @apply w-full;
 }
 
 .show-previews .show-previews\:preview-container {
