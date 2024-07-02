@@ -55,16 +55,21 @@ export default class extends Controller {
     }
   }
 
+  editPrevious() {
+    const messageEdits = document.querySelectorAll("[data-role='message-edit']")
+    const lastEdit = messageEdits[messageEdits.length - 1]
+    if (lastEdit) lastEdit.click()
+  }
+
   toggleMicrophone(event) {
     if (!this.hasMicrophoneEnableTarget || !Listener.supported) return // TODO: remove when enabling feature
 
     event.preventDefault()
 
-    if (Listener.engaged) {
+    if (Listener.engaged)
       this.disableMicrophone()
-    } else if (Microphone.off) {
+    else if (Listener.disabled)
       this.enableMicrophone()
-    }
   }
 
   boundDetermineMicButton = (event) => { this.determineMicButton(event) }
@@ -80,7 +85,7 @@ export default class extends Controller {
       this.enableMicrophone()
     else if (Listener.dismissed)
       this.blinkingMicrophone() // mic still on
-    else if (Microphone.off)
+    else if (Listener.disabled)
       this.disableMicrophone()
   }
 
@@ -117,7 +122,7 @@ export default class extends Controller {
 
   async focus() {
     if (viewport('md')) {
-      this.inputTarget.placeholder = 'ENTER  to submit'
+      this.inputTarget.placeholder = 'RETURN to submit   ↑ to edit last message'
     } else {
       this.inputTarget.placeholder = ''
     }
